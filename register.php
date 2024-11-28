@@ -1,8 +1,3 @@
-<?php
-session_start();
-$message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']); // Hapus pesan setelah ditampilkan
-?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,54 +13,53 @@ unset($_SESSION['message']); // Hapus pesan setelah ditampilkan
             height: 100vh;
             margin: 0;
         }
-        .login-container {
+        .register-container {
             width: 300px;
         }
-        .login-header {
+        .register-header {
             background-color: #f8f8f8;
             padding: 15px;
             border-bottom: 1px solid #ddd;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
         }
-        .login-header h2 {
+        .register-header h2 {
             margin: 0;
             font-size: 18px;
         }
-        .login-body {
+        .register-body {
             padding: 20px;
         }
-        .login-body button {
+        .register-body button {
             width: 100%;
         }
     </style>
 </head>
 <body>
-<?php if ($message): ?>
-        <div class="alert alert-success" role="alert">
-            <?= $message; ?>
+    <div class="register-container card">
+        <div class="register-header card-header">
+            <h2>Halaman Register</h2>
         </div>
-    <?php endif; ?>
-    <div class="login-container card">
-        <div class="login-header card-header">
-            <h2>Halaman Login</h2>
-        </div>
-        <div class="login-body card-body">
-            <form action="./backend/login.php" method="post">
+        <div class="register-body card-body">
+            <form action="./backend/register.php" method="post">
                 <div class="form-group">
-                    <label for="email">Username</label>
+                    <label for="name">Nama</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="masukkan nama anda">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="masukkan email anda">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="masukkan password anda">
                 </div>
-                <button type="submit" class="btn btn-primary" name="submit">Masuk</button>
+                <div class="form-group">
+                    <label for="confirm">Konfirmasi Password</label>
+                    <input type="password" class="form-control" id="confirm" name="confirm" placeholder="masukkan konfirmasi password anda">
+                </div>
+                <button type="submit" class="btn btn-primary" name="submit">Register</button>
             </form>
-            <div class="text-center mt-3">
-          <p>Belum memiliki akun? <b><a href="register.php" class="btn btn-warning">Daftar di
-                sini</a></b></p>
-        </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
