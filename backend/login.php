@@ -1,16 +1,45 @@
 <?php
+session_start();
+require './../config/db.php';
 
-        if(isset($_POST['email']) || isset($_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+if(isset($_POST['submit'])) {
 
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-            if($email =='admin@admin.com' && $password =='admin') {
-                header('Location: ./../dashboard.php');
+    $user = mysqli_query($db_connect,"SELECT * FROM users WHERE email = '$email'");
+    if(mysqli_num_rows($user) > 0) {
+        $data = mysqli_fetch_assoc($user);
+        
+        if(password_verify($password,$data['password'])) {
+           
+            //otorisasi
+            $_SESSION['name'] = $data['name'];
+            $_SESSION['role'] = $data['role'];
+
+            if($_SESSION['role'] == 'admin'){
+                header('Location:./../admin.php');
             } else {
-                echo"email atau password salah";
-            }    
-        }
-       
+                header("Location:./../profile.php");
+            }
+        } else { ?>
+            <script type="text/JavaScript">
+                alert("password salah");
+                window.location="./../index.php"
+            </script>
+            <?php
+                
+            }
 
-    ?>
+    } else { ?>
+        <script type="text/JavaScript">
+            alert("password atau email salah");
+            window.location="./../index.php"
+        </script>
+        <?php
+            
+        }
+
+    
+}
+?>
